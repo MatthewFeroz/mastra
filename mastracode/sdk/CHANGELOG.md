@@ -1,5 +1,14 @@
 # @mastra/code-sdk
 
+## 1.2.1-alpha.1
+
+### Patch Changes
+
+- Fixed memory growth from accumulated language servers by limiting retained workspace clients. ([#21186](https://github.com/mastra-ai/mastra/pull/21186))
+
+- Updated dependencies [[`aa3e7be`](https://github.com/mastra-ai/mastra/commit/aa3e7be30f8addb0278ea74429f4df054517a287), [`90822db`](https://github.com/mastra-ai/mastra/commit/90822dba08fb2169c518e4a6d7f127c098eb46b8), [`3700208`](https://github.com/mastra-ai/mastra/commit/37002080c7838267803a7e579a7d58b908d62f36), [`79c4f82`](https://github.com/mastra-ai/mastra/commit/79c4f8295f568752eeadf8a9b50010a7d9ec06ae)]:
+  - @mastra/core@1.59.0-alpha.1
+
 ## 1.2.1-alpha.0
 
 ### Patch Changes
