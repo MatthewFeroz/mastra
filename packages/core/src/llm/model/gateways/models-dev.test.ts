@@ -13,6 +13,7 @@ const {
   createGroqMock,
   createMistralMock,
   createOpenAIMock,
+  createOpenAICompatibleMock,
   createOpenRouterMock,
   createPerplexityMock,
   createTogetherAIMock,
@@ -31,6 +32,7 @@ const {
   createGroqMock: vi.fn(),
   createMistralMock: vi.fn(),
   createOpenAIMock: vi.fn(),
+  createOpenAICompatibleMock: vi.fn(),
   createOpenRouterMock: vi.fn(),
   createPerplexityMock: vi.fn(),
   createTogetherAIMock: vi.fn(),
@@ -47,6 +49,7 @@ vi.mock('@ai-sdk/google-v6', () => ({ createGoogleGenerativeAI: createGoogleGene
 vi.mock('@ai-sdk/groq-v6', () => ({ createGroq: createGroqMock }));
 vi.mock('@ai-sdk/mistral-v6', () => ({ createMistral: createMistralMock }));
 vi.mock('@ai-sdk/openai-v6', () => ({ createOpenAI: createOpenAIMock }));
+vi.mock('@ai-sdk/openai-compatible-v6', () => ({ createOpenAICompatible: createOpenAICompatibleMock }));
 vi.mock('@ai-sdk/perplexity-v6', () => ({ createPerplexity: createPerplexityMock }));
 vi.mock('@ai-sdk/togetherai-v6', () => ({ createTogetherAI: createTogetherAIMock }));
 vi.mock('@ai-sdk/xai-v6', () => ({ createXai: createXaiMock }));
@@ -74,6 +77,7 @@ describe('ModelsDevGateway', () => {
     createGroqMock.mockReturnValue(callableModelMock);
     createMistralMock.mockReturnValue(callableModelMock);
     createOpenAIMock.mockReturnValue({ responses: openAIResponsesMock });
+    createOpenAICompatibleMock.mockReturnValue({ chatModel: chatModelMock });
     createOpenRouterMock.mockReturnValue(callableModelMock);
     createPerplexityMock.mockReturnValue(callableModelMock);
     createTogetherAIMock.mockReturnValue(callableModelMock);
@@ -614,6 +618,36 @@ describe('ModelsDevGateway', () => {
       });
       expect(xAIResponsesMock).toHaveBeenCalledWith('grok-4.3');
       expect(callableModelMock).not.toHaveBeenCalledWith('grok-4.3');
+    });
+
+    it('routes Merge Gateway models through its OpenAI-compatible endpoint', async () => {
+      gateway = new ModelsDevGateway({
+        'merge-gateway': {
+          apiKeyEnvVar: 'MERGE_GATEWAY_API_KEY',
+          name: 'Merge Gateway',
+          models: ['openai/gpt-4o-mini'],
+          gateway: 'models.dev',
+          npm: 'merge-gateway-ai-sdk-provider',
+          url: 'https://api-gateway.merge.dev/v1/ai-sdk',
+        },
+      });
+
+      const result = await gateway.resolveLanguageModel({
+        providerId: 'merge-gateway',
+        modelId: 'openai/gpt-4o-mini',
+        apiKey: 'merge-test',
+        headers: { 'x-test': 'true' },
+      });
+
+      expect(result).toEqual({ provider: 'chat' });
+      expect(createOpenAICompatibleMock).toHaveBeenCalledWith({
+        name: 'merge-gateway',
+        apiKey: 'merge-test',
+        baseURL: 'https://api-gateway.merge.dev/v1/ai-sdk',
+        headers: expect.objectContaining({ 'x-test': 'true' }),
+        supportsStructuredOutputs: true,
+      });
+      expect(chatModelMock).toHaveBeenCalledWith('openai/gpt-4o-mini');
     });
   });
 

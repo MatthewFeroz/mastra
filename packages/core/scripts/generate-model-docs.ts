@@ -38,6 +38,7 @@ function formatProviderName(name: string): string {
     zhipuai: 'Zhipu AI',
     opencode: 'OpenCode',
     'azure-openai': 'Azure OpenAI',
+    'merge-gateway': 'Merge Gateway',
   };
 
   const lower = name.toLowerCase();
@@ -114,7 +115,7 @@ const __dirname = path.dirname(__filename);
 const POPULAR_PROVIDERS = ['openai', 'anthropic', 'google', 'deepseek', 'groq', 'mistral', 'xai'];
 
 // Providers that are actually gateways (aggregate multiple model providers)
-const GATEWAY_PROVIDERS = ['netlify', 'neon', 'openrouter', 'vercel', 'azure-openai'];
+const GATEWAY_PROVIDERS = ['merge-gateway', 'netlify', 'neon', 'openrouter', 'vercel', 'azure-openai'];
 
 const MANUALLY_DOCUMENTED_PROVIDERS = ['azure-openai'];
 const MANUALLY_DOCUMENTED_GATEWAYS = ['azure-openai', 'mastra'];

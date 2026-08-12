@@ -40,6 +40,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          id: 'gateways/merge-gateway',
+          label: 'Merge Gateway',
+        },
+        {
+          type: 'doc',
           id: 'gateways/neon',
           label: 'Neon',
         },
@@ -508,11 +513,6 @@ const sidebars = {
           type: 'doc',
           id: 'providers/meganova',
           label: 'Meganova',
-        },
-        {
-          type: 'doc',
-          id: 'providers/merge-gateway',
-          label: 'Merge Gateway',
         },
         {
           type: 'doc',

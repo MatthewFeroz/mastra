@@ -34,7 +34,7 @@ describe('ModelsDevGateway - Real API Integration', () => {
     }
 
     // Check for specific known providers that should definitely be there
-    const expectedProviders = ['openai', 'anthropic', 'groq', 'deepseek', 'google', 'vercel'];
+    const expectedProviders = ['openai', 'anthropic', 'groq', 'deepseek', 'google', 'merge-gateway', 'vercel'];
     for (const provider of expectedProviders) {
       expect(providers[provider], `Expected provider ${provider} not found`).toBeDefined();
     }
@@ -57,6 +57,12 @@ describe('ModelsDevGateway - Real API Integration', () => {
 
     if (providers.google) {
       expect(providers.google.apiKeyEnvVar).toEqual(['GOOGLE_API_KEY', 'GOOGLE_GENERATIVE_AI_API_KEY']);
+    }
+
+    if (providers['merge-gateway']) {
+      expect(providers['merge-gateway'].url).toBe('https://api-gateway.merge.dev/v1/ai-sdk');
+      expect(providers['merge-gateway'].apiKeyEnvVar).toBe('MERGE_GATEWAY_API_KEY');
+      expect(providers['merge-gateway'].models).toContain('openai/gpt-4o-mini');
     }
 
     if (providers.vercel) {
