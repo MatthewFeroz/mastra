@@ -63,6 +63,7 @@ The `/webhooks/x` route answers X's GET CRC challenge and verifies signed POST d
 - **One issue per mention.** Each mention is claimed in the database before the model runs, so a redelivery or restart can't file it twice.
 - **Spam limits.** By default each person can open 3 issues an hour, everyone together 25 a day, and each person gets 10 mentions an hour before the bot goes quiet. Change them with the `TAGBOT_*` variables.
 - **No made-up product claims.** Asked whether Merge connects to a tool, the bot looks it up in Merge's public connector catalog with `checkConnector` instead of answering from memory.
+- **Prompt injection is blocked.** Merge Gateway screens each model call. A blocked mention never reaches the model, and the bot replies with a fixed refusal.
 - **Short, plain replies.** Replies are trimmed to 240 characters and never include provider error text.
 
 ## Deploying
