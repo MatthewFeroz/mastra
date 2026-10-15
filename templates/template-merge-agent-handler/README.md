@@ -62,6 +62,7 @@ The `/webhooks/x` route answers X's GET CRC challenge and verifies signed POST d
 - **Only the latest mention can ask.** The server checks the newest post for an explicit request to open, file or report an issue. Summary requests disable tools, and instructions in earlier posts can't grant write access.
 - **One issue per mention.** Each mention is claimed in the database before the model runs, so a redelivery or restart can't file it twice.
 - **Spam limits.** By default each person can open 3 issues an hour, everyone together 25 a day, and each person gets 10 mentions an hour before the bot goes quiet. Change them with the `TAGBOT_*` variables.
+- **No made-up product claims.** Asked whether Merge connects to a tool, the bot looks it up in Merge's public connector catalog with `checkConnector` instead of answering from memory.
 - **Short, plain replies.** Replies are trimmed to 240 characters and never include provider error text.
 
 ## Deploying
