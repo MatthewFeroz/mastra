@@ -1,0 +1,37 @@
+{
+  "name": "template-merge-agent-handler",
+  "version": "1.0.0",
+  "description": "A public @bot for your product on X. Tag it in a thread and it files a GitHub issue through Merge Agent Handler and replies with the link, or summarizes the thread. Models run through Merge Gateway.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "mastra dev",
+    "build": "mastra build",
+    "start": "mastra start",
+    "demo": "tsx --env-file-if-exists=.env scripts/demo.ts",
+    "demo:export": "tsx scripts/export-demo.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx scripts/smoke-test.ts && tsx scripts/x-integration-test.ts && tsx scripts/limits-test.ts && tsx scripts/demo-feed-test.ts",
+    "test:live": "tsx --env-file-if-exists=.env scripts/live-test.ts",
+    "x-auth": "tsx --env-file-if-exists=.env scripts/x-auth.ts"
+  },
+  "dependencies": {
+    "@chat-adapter/x": "^4.41.1",
+    "@libsql/client": "^0.18.0",
+    "@mastra/core": "latest",
+    "@mastra/libsql": "latest",
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "@xdevplatform/xdk": "^0.6.6",
+    "chat": "^4.41.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.9",
+    "mastra": "latest",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.3"
+  }
+}

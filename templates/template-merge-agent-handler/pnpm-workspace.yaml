@@ -1,0 +1,6 @@
+# Keep template installs independent when this folder is inside the Mastra monorepo.
+packages:
+  - '.'
+
+allowBuilds:
+  esbuild: true
