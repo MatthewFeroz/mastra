@@ -19,6 +19,7 @@
     "x-auth": "tsx --env-file-if-exists=.env scripts/x-auth.ts"
   },
   "dependencies": {
+    "@chat-adapter/state-redis": "^4.42.0",
     "@chat-adapter/x": "^4.41.1",
     "@libsql/client": "^0.18.0",
     "@mastra/core": "latest",

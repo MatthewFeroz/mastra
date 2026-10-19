@@ -1,4 +1,5 @@
 import { Agent } from '@mastra/core/agent';
+import { createRedisState } from '@chat-adapter/state-redis';
 import { tagbotTools } from '../tools';
 import { botUserName, createThreadXAdapter } from '../x-adapter';
 import { BlockedRequestError, createMentionHandler } from '../x-handler';
@@ -35,6 +36,8 @@ export const tagbot = new Agent({
   defaultOptions: { maxSteps: 3 },
   channels: xAdapter ? {
     adapters: { x: { adapter: xAdapter, streaming: false, toolDisplay: 'hidden', textFormat: 'plain', typingStatus: false, formatError: () => "I couldn't finish this request. Please try a new mention." } },
+    // Thread locks and queues live in memory unless REDIS_URL is set. Redis shares them, so more than one instance can run.
+    ...(process.env.REDIS_URL ? { state: createRedisState({ keyPrefix: 'tagbot' }) } : {}),
     // The custom handler reads reply ancestry on every mention, including after a restart.
     threadContext: { maxMessages: 0 },
     inlineMedia: [],

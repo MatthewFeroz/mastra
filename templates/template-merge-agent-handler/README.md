@@ -68,7 +68,9 @@ The `/webhooks/x` route answers X's GET CRC challenge and verifies signed POST d
 
 ## Deploying
 
-Use a persistent LibSQL database such as Turso for `DATABASE_URL` and `DATABASE_AUTH_TOKEN`. A local file on ephemeral hosting loses mention claims, spam counts and rotated tokens. Run one instance, since channel locks are held in memory.
+Use a persistent LibSQL database such as Turso for `DATABASE_URL` and `DATABASE_AUTH_TOKEN`. A local file on ephemeral hosting loses mention claims, spam counts and rotated tokens.
+
+By default the bot keeps X thread locks and queues in memory, so run one instance. To run more, set `REDIS_URL` to a Redis database, such as Upstash, that every instance can reach. Instances then share locks and queues, and the database still makes sure each mention files at most one issue.
 
 Set `TAGBOT_API_TOKEN` to protect Studio's APIs and the live request feed. The X webhook stays reachable because it checks X's signature itself.
 
